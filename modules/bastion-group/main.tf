@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+     
+terraform {
+  backend "gcs" {}
+}
 
 module "iap_bastion" {
   source                             = "../.."
@@ -71,6 +75,8 @@ resource "google_compute_firewall" "allow_from_iap_to_bastion" {
   ]
   target_service_accounts = [module.iap_bastion.service_account]
 }
+  
+ 
 
 # TODO: Currently gcloud compute start-iap-tunnel does not support
 # anything but instances. Add in ILB code when b/147258412 is fixed.
